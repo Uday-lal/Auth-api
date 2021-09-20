@@ -3,6 +3,23 @@ const textarea = document.getElementById("textarea1");
 const post = document.getElementById("post");
 const collections = document.getElementById("collections");
 
+function removeHTML(message) {
+  if (message.includes("<") || message.includes(">")) {
+    const lt = "&lt;";
+    const gt = "&gt;";
+    while (true) {
+      if (message.includes("<")) {
+        message = message.replace("<", lt);
+      } else if (message.includes(">")) {
+        message = message.replace(">", gt);
+      } else {
+        break;
+      }
+    }
+  }
+  return message;
+}
+
 function scrollSmoothToBottom(id) {
   var div = document.getElementById(id);
   $("#" + id).animate(
@@ -22,8 +39,9 @@ socket.on("feed-update", function (data) {
 });
 
 post.onclick = function () {
-  const feed = textarea.value;
+  let feed = textarea.value;
   if (feed !== "") {
+    feed = removeHTML(feed);
     const data = { text: feed };
     socket.emit("feed", data);
     textarea.value = "";
