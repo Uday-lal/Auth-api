@@ -1,0 +1,32 @@
+* {
+  font-family: "Varela Round", sans-serif;
+}
+
+.feeds-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-card {
+  width: 70%;
+  height: 65%;
+  border-radius: 30px;
+  background-color: ghostwhite;
+  padding: 20px;
+  box-shadow: 5px 10px 18px #888888;
+}
+
+div#feeds {
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 65%;
+}
+
+ul#collections > li {
+  padding: 20px;
+}
