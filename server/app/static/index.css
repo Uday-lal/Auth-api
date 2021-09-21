@@ -2,10 +2,10 @@
   font-family: "Varela Round", sans-serif;
 }
 
-.feeds-container {
+div.center-content {
+  display: flex;
   width: 100vw;
   height: 100vh;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;

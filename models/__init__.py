@@ -1,8 +1,10 @@
 from pymongo import MongoClient
 import urllib.parse
 import json
+import os
 
-file = open("config.json", "r")
+file = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+            "config.json"), "r")
 data = json.load(file)
 username = data["username"]
 password = data["password"]
