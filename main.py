@@ -12,7 +12,7 @@ app = FastAPI()
 redis_client = redis.Redis(host="127.0.0.1", port=6379, db=0)
 
 
-def get_tocken():
+def get_token():
     while True:
         token = secrets.token_hex(28)
         if token not in redis_client.scan_iter("*"):
@@ -52,7 +52,7 @@ def login(user: UsersModel):
     if user_data:
         user_id = str(user_data["_id"])
         if user_data["password"] == user.password:
-            sid = get_tocken()
+            sid = get_token()
             user_data["_id"] = user_id
             user_data["sid"] = sid
             redis_client.set(sid, user_id)
@@ -71,13 +71,20 @@ def create_feed(feed: FeedModel):
             "user_id": user_id,
             "feed": feed.feed
         }
-        print(feed_document)
         feeds = Feeds()
         feeds.create(feed_document)
         return JSONResponse(status_code=201, content={"message": "Feed created"})
     except Exception as e:
-        print(e)
         return JSONResponse(status_code=500, content={"message": "Something went wrong :("})
+
+
+@app.get("/authenticate-token")
+def authenticate_token(user: UsersModel):
+    sid = user.sid
+    if sid in redis_client.scan_iter("*"):
+        return JSONResponse(status_code=200, content={"is_autherised": True})
+    else:
+        return JSONResponse(status_code=401, content={"is_autherised": False})
 
 
 @app.delete("/delete/{user_id}")

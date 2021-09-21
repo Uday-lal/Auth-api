@@ -4,7 +4,7 @@ from typing import Optional
 
 class UsersModel(BaseModel):
     sid: Optional[str]
-    user_name: str
+    user_name: Optional[str]
     email: str
     password: str
 
